@@ -2,6 +2,7 @@
 .idea/
 *.sln.iml
 *.csproj.user
+*.csproj
 
 # Build results
 /bin/
@@ -9,7 +10,6 @@
 
 # NUnit and .NET files
 TestResult/
-TestResults/
 TestResult.xml
 *.trx
 
