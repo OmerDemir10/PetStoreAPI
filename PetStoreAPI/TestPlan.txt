@@ -1,0 +1,150 @@
+Test Plan: Pet Store API Tests
+
+Objective: To develop an automated test suite for https://petstore.swagger.io
+that covers the each endpoint working properly
+
+Scope: The automated test suite will cover the following endpoints of API:
+
+POST:   https://petstore.swagger.io/v2/pet/1/uploadImage
+POST:   https://petstore.swagger.io/v2/pet
+PUT:    https://petstore.swagger.io/v2/pet
+GET:    https://petstore.swagger.io/v2/pet/findByStatus?status=available
+GET:    https://petstore.swagger.io/v2/pet/1
+POST:   https://petstore.swagger.io/v2/pet/9
+DELETE: https://petstore.swagger.io/v2/pet/1
+
+Automation Approach:
+
+1-) Framework selection: We will use a .NET 7.0 Core-based framework for automation testing. 
+The framework will consist of the following components:
+
+    Microsoft.NET.Test.Sdk/17.5.0: The MSbuild targets and properties for building .NET test projects.
+    NUnit/3.13.3: for test case management and execution
+    NUnit Console Runner/3.16.3: This package includes the nunit3-console runner and test engine for version 3 of the NUnit unit-testing framework.
+    NUnit3 Test Adapter/4.4.2: It allows the user to run and debug unit tests created using the nUnit framework
+    Newtonsoft Json/13.0.3: Json.NET is a popular high-performance JSON framework for .NET
+    RestSharp/110.2.0: Simple REST and HTTP API Client
+    HTML Reports: for test execution reports
+   
+    
+Test Environment:
+
+OS: macOS
+
+
+Test Cases
+
+1-) Test Name: FindPetsByStatus_ReturnsOk
+    Test Objective: To verify that the API endpoint returns the expected response status code when the status parameter is set to 'available'.
+    Test Steps:
+    a. Send a GET request to the /pet/findByStatus endpoint with status=available query parameter.
+    b. Execute the request.
+    c. Verify that the API response status code is 200 (OK).
+    Expected Result: The API should return a response with status code 200 (OK).
+
+2-) Test Name: TryToFindPetsByInvalidStatus_ReturnsBadRequest
+    Test Objective: To verify that the API endpoint returns the expected response status code when an invalid status parameter is passed.
+    Test Steps:
+    a. Send a GET request to the /pet/findByStatus endpoint with an invalid status parameter (not_a_status).
+    b. Execute the request.
+    c. Verify that the API response status code is 404 (Not Found).
+    Expected Result: The API should return a response with status code 404 (Not Found).
+
+3-) Test Name: CreatePet_ReturnsOk
+    Test Objective: To verify that a new pet can be successfully created using the API endpoint.
+    Test Steps:
+    a. Send a POST request to the /pet endpoint with the required request body.
+    b. Execute the request.
+    c. Verify that the API response status code is 200 (OK).
+    Expected Result: The API should successfully create a new pet and return a response with status code 200 (OK).
+
+4-) Test Name: TryToCreatePetWithWrongMethod_ReturnsBadRequest
+    Test Objective: To verify that the API endpoint returns the expected response status code when an invalid HTTP method is used to create a pet.
+    Test Steps:
+    a. Send a GET request to the /pet endpoint with the required request body.
+    b. Execute the request.
+    c. Verify that the API response status code is 405 (Method Not Allowed).
+    Expected Result: The API should return a response with status code 405 (Method Not Allowed).
+
+5-) Test Name: CreatePet_InvalidId_ReturnsBadRequest
+    Test Objective: To verify that the API endpoint returns the expected response status code when an invalid pet ID is provided.
+    Test Steps:
+    a. Send a POST request to the /pet endpoint with an invalid pet ID (-1) in the request body.
+    b. Execute the request.
+    c. Verify that the API response status code is 400 (Bad Request).
+    Expected Result: The API should return a response with status code 400 (Bad Request).
+
+6-) Test Name: AddPetTest
+    Test Objective: To verify that a new pet can be successfully added using the API endpoint.
+    Test Steps:
+    a. Send a POST request to the /pet endpoint with the required request body.
+    b. Execute the request.
+    c. Verify that the API response status code is 200 (OK).
+    Expected Result: The API should successfully add a new pet and return a response with status code 200 (OK).
+
+7-) Test Name: UpdatePetTest
+    Test Objective: To verify that an existing pet can be successfully updated using the API endpoint.
+    Test Steps:
+    a. Send a PUT request to the /pet endpoint with the required request body.
+    b. Execute the request.
+    c. Verify that the API response status code is 200 (OK).
+    Expected Result: The API should successfully update the existing pet and return a response with status code 200 (OK).
+    
+8-) Test Name: TryToUpdatePetWithoutProvidingStatus_ReturnBadRequest
+    Test Objective: To ensure that a bad request is returned when a pet is updated without providing status.
+    Test Steps:
+    a. Set up a PUT request with an invalid id and status.
+    b. Execute the request.
+    c. Verify that the response status code is 404 (BadRequest).
+    Expected Result: The response status code should be 404 (BadRequest).
+    
+9-) Test Name: CreatePet_ValidPet_ReturnsOk
+    Test Objective: To ensure that a pet can be created successfully.
+    Test Steps:
+    a. Set up a POST request with a valid pet object.
+    b. Execute the request.
+    c. Verify that the response status code is 200 (OK).
+    Expected Result: The response status code should be 200 (OK).
+    
+10-) Test Name: GetPetById_ShouldReturnPet
+     Test Objective: To ensure that a pet can be retrieved by ID.
+     Test Steps:
+     a. Set up a GET request with a valid pet ID.
+     b. Execute the request.
+     c. Verify that the response status code is 200 (OK).
+     d. Parse the response content as a JObject.
+     e. Verify that the name property is equal to the expected value.
+     Expected Result: The response status code should be 200 (OK) and the name property should be equal to the expected value.
+    
+11-) Test Name: UpdatePet_ShouldUpdatePetNameAndStatus
+     Test Objective: To ensure that a pet's name and status can be updated successfully.
+     Test Steps:
+     a. Set up a POST request with a valid pet ID and updated name and status.
+     b. Execute the request.
+     c. Verify that the response status code is 200 (OK).
+     Expected Result: The response status code should be 200 (OK).
+    
+12-) Test Name: UploadImage_ValidImage_ReturnsOk
+     Test Objective: To ensure that an image can be uploaded for a pet.
+     Test Steps:
+     a. Create a new pet.
+     b. Set up a POST request with a valid file path and pet ID.
+     c. Execute the request.
+     d. Verify that the response status code is 200 (OK).
+     Expected Result: The response status code should be 200 (OK).
+     
+13-) Test Name: DeletePet_ShouldReturnSuccess
+     Test Objective: To ensure that a pet can be deleted successfully.
+     Test Steps:
+     a. Set up a DELETE request with a valid pet ID.
+     b. Execute the request.
+     c. Verify that the response status code is 200 (OK).
+     Expected Result: The response status code should be 200 (OK).
+     
+14-) Test Name: DeleteSamePet_ShouldReturnBadRequest
+     Test Objective: To ensure that a bad request is returned when a pet is deleted twice.
+     Test Steps:
+     a. Set up a DELETE request with a valid pet ID.
+     b. Execute the request.
+     c. Verify that the response status code is 404 (BadRequest).
+     Expected Result: The response status code should be 404 (BadRequest).    
