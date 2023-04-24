@@ -1,0 +1,17 @@
+# Rider files
+.idea/
+*.sln.iml
+*.csproj.user
+
+# Build results
+/bin/
+/obj/
+
+# NUnit and .NET files
+TestResult/
+TestResults/
+TestResult.xml
+*.trx
+
+# Packages
+/packages/
